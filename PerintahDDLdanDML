@@ -1,0 +1,274 @@
+~ $ mysql -u putrinur -p
+Enter password:
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 7
+Server version: 10.11.4-MariaDB MariaDB Server
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> create database db_tokobuku_putrinur;
+Query OK, 1 row affected (0.016 sec)
+
+MariaDB [(none)]> use db_tokobuku_putrinur;
+Database changed
+MariaDB [db_tokobuku_putrinur]> create table buku(
+    -> kode_buku varchar (5) not null,
+    -> nama_buku varchar (15) not null,
+    -> nomor_isbn integer (10) not null,
+    -> penerbit varchar (15) not null,
+    -> tahun_terbit date not null,
+    -> penerbit varchar (25) not null,
+    -> stok integer (15) not null,
+    -> PRIMARY KEY (kode_buku)
+    -> );
+ERROR 1060 (42S21): Duplicate column name 'penerbit'
+MariaDB [db_tokobuku_putrinur]> create table buku(        -> kode_buku varchar (5) not null,                    -> nama_buku varchar (15) not null,                   -> nomor_isbn integer (10) not null,                  -> penerbit varchar (25) not null,                    -> tahun_terbit date not null,                        -> penulis varchar (25) not null,                     -> stok integer (15) not null,                        -> PRIMARY KEY (kode_buku)                            -> );                                             Query OK, 0 rows affected (0.037 sec)
+MariaDB [db_tokobuku_putrinur]> insert into buku(kode_    -> ;                                              ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 1
+MariaDB [db_tokobuku_putrinur]> insert into buku(kode_    -> ma_buku,nomor_isbn,penerbit,tahun_terbit,penuli    ->  values
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 1
+MariaDB [db_tokobuku_putrinur]> insert into buku(kode_ERROR 1264 (22003): Out of range value for column 'nomor_isbn' at row 1B001","Goosebumps",97987654926,"GrameMariaDB [db_tokobuku_putrinur]> insert into buku(kode_buku,nama_buku,nomor_isbn,penerbit,tahun_terbit,penulis,stok) values ("B001","Goosebumps",9798765492,"Gramedia","2002-02-10","R.L. Steine",100);
+ERROR 1264 (22003): Out of range value for column 'nomor_isbn' at row 1
+MariaDB [db_tokobuku_putrinur]> insert into buku(kode_buku,nama_buku,nomor_isbn,penerbit,tahun_terbit,penulis,stok) values ("B001","Goosebumps",979876549,"Gramedia","2002-02-10","R.L. Steine",100);
+Query OK, 1 row affected (0.003 sec)
+
+MariaDB [db_tokobuku_putrinur]> select * from buku;
++-----------+------------+------------+----------+--------------+-------------+------+
+| kode_buku | nama_buku  | nomor_isbn | penerbit | tahun_terbit | penulis     | stok |
++-----------+------------+------------+----------+--------------+-------------+------+
+| B001      | Goosebumps |  979876549 | Gramedia | 2002-02-10   | R.L. Steine |  100 |
++-----------+------------+------------+----------+--------------+-------------+------+
+1 row in set (0.001 sec)
+
+MariaDB [db_tokobuku_putrinur]> insert into buku(kode_buku,nama_buku,nomor_isbn,penerbit,tahun_terbit,penulis,stok) values ("B002","Basis Data",9798753,"Gramedia","2005-02-15","Andi",100);
+Query OK, 1 row affected (0.003 sec)
+
+MariaDB [db_tokobuku_putrinur]> create table distributor(
+    -> id_distributor int(15),
+    -> nama_distributor varchar(25),
+    -> no_telp int(20),
+    -> alamat varchar(30);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 5
+MariaDB [db_tokobuku_putrinur]> create table distributor(                                                       -> id_distributor int(15),                            -> nama_distributor varchar(25),                      -> no_telp int(20),                                   -> alamat varchar(30),                                -> PRIMARY KEY (id_distributor)                       -> );
+Query OK, 0 rows affected (0.142 sec)
+
+MariaDB [db_tokobuku_putrinur]> insert into distributor(id_distributor,nama_distributor,no_telp,alamat) values (0020,"Suka Maju",089533236000,"Kendal");
+ERROR 1264 (22003): Out of range value for column 'no_telp' at row 1
+MariaDB [db_tokobuku_putrinur]> insert into distributor(id_distributor,nama_distributor,no_telp,alamat) values (0020,"Suka Maju",0895332360,"Kendal");
+Query OK, 1 row affected (0.006 sec)
+
+MariaDB [db_tokobuku_putrinur]> insert into distributor(id_distributor,nama_distributor,no_telp,alamat) values (0021,"Laku",0854336792,"Ngaliyan");
+Query OK, 1 row affected (0.002 sec)
+
+MariaDB [db_tokobuku_putrinur]> show tables;
++--------------------------------+
+| Tables_in_db_tokobuku_putrinur |
++--------------------------------+
+| buku                           |
+| distributor                    |
++--------------------------------+
+2 rows in set (0.006 sec)
+
+MariaDB [db_tokobuku_putrinur]> create table pembelian(
+    -> id_order int(11),
+    -> id_barang int(11),
+    -> id_pembeli int(11),
+    -> tanggal date,
+    -> PRIMARY KEY (id_order)
+    -> );
+Query OK, 0 rows affected (0.025 sec)
+
+MariaDB [db_tokobuku_putrinur]> insert into pembelian(id_order,id_barang,id_pembeli,tanggal) values (6017,15056,12345,"2023-07-10");
+Query OK, 1 row affected (0.006 sec)
+
+MariaDB [db_tokobuku_putrinur]> insert into pembelian(id_order,id_barang,id_pembeli,tanggal) values (6018,15058,12356,"2023-07-13");
+Query OK, 1 row affected (0.005 sec)
+
+MariaDB [db_tokobuku_putrinur]> select * from distributor;
++----------------+------------------+-----------+----------+
+| id_distributor | nama_distributor | no_telp   | alamat   |
++----------------+------------------+-----------+----------+
+|             20 | Suka Maju        | 895332360 | Kendal   |
+|             21 | Laku             | 854336792 | Ngaliyan |
++----------------+------------------+-----------+----------+
+2 rows in set (0.009 sec)
+
+MariaDB [db_tokobuku_putrinur]> select * from buku;
++-----------+------------+------------+----------+--------------+-------------+------+
+| kode_buku | nama_buku  | nomor_isbn | penerbit | tahun_terbit | penulis     | stok |
++-----------+------------+------------+----------+--------------+-------------+------+
+| B001      | Goosebumps |  979876549 | Gramedia | 2002-02-10   | R.L. Steine |  100 |
+| B002      | Basis Data |    9798753 | Gramedia | 2005-02-15   | Andi        |  100 |
++-----------+------------+------------+----------+--------------+-------------+------+
+2 rows in set (0.002 sec)
+
+MariaDB [db_tokobuku_putrinur]> select * from pembelian;
++----------+-----------+------------+------------+
+| id_order | id_barang | id_pembeli | tanggal    |
++----------+-----------+------------+------------+
+|     6017 |     15056 |      12345 | 2023-07-10 |
+|     6018 |     15058 |      12356 | 2023-07-13 |
++----------+-----------+------------+------------+
+2 rows in set (0.002 sec)
+
+MariaDB [db_tokobuku_putrinur]> create table pelanggan(
+    -> id_pelanggan int(11),
+    -> tanggal_bayar date,
+    -> total int(11),
+    -> id_order int(11),
+    -> PRIMARY KEY (id_pelanggan)
+    -> )
+    ->
+    -> ,
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 9
+MariaDB [db_tokobuku_putrinur]> create table pelanggan(
+    -> id_pelanggan int(11),                                                      -> nama_pembeli varchar(30),
+    -> no_telp char(14),
+    -> alamat varchar(15,
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 5
+MariaDB [db_tokobuku_putrinur]> create table pelanggan(
+    -> id_pelanggan int(11),                                                      -> nama_pembeli varchar(30),                                                  -> no_telp char(14),                                                          -> alamat varchar(15),                                                        -> PRIMARY KEY (id_pelanggan)
+    -> );
+Query OK, 0 rows affected (0.083 sec)
+
+MariaDB [db_tokobuku_putrinur]> insert into pelanggan(
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 1
+MariaDB [db_tokobuku_putrinur]> insert into pelanggan(id_pelanggan,nama_pembeli,no_telp,alamat) values
+    -> (12345,"Roni",08512365,"Bringin"),
+    -> (12356,"Isya",08754321,"Mangkang");
+Query OK, 2 rows affected (0.029 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+MariaDB [db_tokobuku_putrinur]> select * from pelanggan;
++--------------+--------------+---------+----------+
+| id_pelanggan | nama_pembeli | no_telp | alamat   |
++--------------+--------------+---------+----------+
+|        12345 | Roni         | 8512365 | Bringin  |
+|        12356 | Isya         | 8754321 | Mangkang |
++--------------+--------------+---------+----------+
+2 rows in set (0.007 sec)
+
+MariaDB [db_tokobuku_putrinur]> create table penjualan(
+    -> id_order : int
+    -> id_barang : int
+    -> harga : int
+    -> jumlah : int
+    -> PRIMARY KEY (id_order)
+    -> );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ': int
+id_barang : int
+harga : int
+jumlah : int
+PRIMARY KEY (id_order)
+)' at line 2
+MariaDB [db_tokobuku_putrinur]> create table penjualan(                                     -> id_order int,                                                                        -> id_barang int,
+    -> harga int,
+    -> jumlah int,
+    -> PRIMARY KEY (id_order)
+    -> );
+Query OK, 0 rows affected (0.010 sec)
+
+MariaDB [db_tokobuku_putrinur]> insert into penjualan(id_order,id_barang,harga,jumlah) values
+    -> (6017,15056,170000,3),
+    -> (6018,15058,32000,1);
+Query OK, 2 rows affected (0.015 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+MariaDB [db_tokobuku_putrinur]> select * from penjualan;
++----------+-----------+--------+--------+
+| id_order | id_barang | harga  | jumlah |
++----------+-----------+--------+--------+
+|     6017 |     15056 | 170000 |      3 |
+|     6018 |     15058 |  32000 |      1 |
++----------+-----------+--------+--------+
+2 rows in set (0.005 sec)
+
+MariaDB [db_tokobuku_putrinur]> show databases;
++----------------------+
+| Database             |
++----------------------+
+| db_tokobuku_putrinur |
+| information_schema   |
+| mysql                |
+| performance_schema   |
+| sys                  |
+| test                 |
++----------------------+
+6 rows in set (0.014 sec)
+
+MariaDB [db_tokobuku_putrinur]> show tables;
++--------------------------------+
+| Tables_in_db_tokobuku_putrinur |
++--------------------------------+
+| buku                           |
+| distributor                    |
+| pelanggan                      |
+| pembelian                      |
+| penjualan                      |
++--------------------------------+
+5 rows in set (0.005 sec)
+
+MariaDB [db_tokobuku_putrinur]> select * from buku;
++-----------+------------+------------+----------+--------------+-------------+------+
+| kode_buku | nama_buku  | nomor_isbn | penerbit | tahun_terbit | penulis     | stok |
++-----------+------------+------------+----------+--------------+-------------+------+
+| B001      | Goosebumps |  979876549 | Gramedia | 2002-02-10   | R.L. Steine |  100 |
+| B002      | Basis Data |    9798753 | Gramedia | 2005-02-15   | Andi        |  100 |
++-----------+------------+------------+----------+--------------+-------------+------+
+2 rows in set (0.086 sec)
+
+MariaDB [db_tokobuku_putrinur]> select * from distributor;
++----------------+------------------+-----------+----------+
+| id_distributor | nama_distributor | no_telp   | alamat   |
++----------------+------------------+-----------+----------+
+|             20 | Suka Maju        | 895332360 | Kendal   |
+|             21 | Laku             | 854336792 | Ngaliyan |
++----------------+------------------+-----------+----------+
+2 rows in set (0.004 sec)
+
+MariaDB [db_tokobuku_putrinur]> select * from pelanggan;
++--------------+--------------+---------+----------+
+| id_pelanggan | nama_pembeli | no_telp | alamat   |
++--------------+--------------+---------+----------+
+|        12345 | Roni         | 8512365 | Bringin  |
+|        12356 | Isya         | 8754321 | Mangkang |
++--------------+--------------+---------+----------+
+2 rows in set (0.002 sec)
+
+MariaDB [db_tokobuku_putrinur]> select * from pembelian;
++----------+-----------+------------+------------+
+| id_order | id_barang | id_pembeli | tanggal    |
++----------+-----------+------------+------------+
+|     6017 |     15056 |      12345 | 2023-07-10 |
+|     6018 |     15058 |      12356 | 2023-07-13 |
++----------+-----------+------------+------------+
+2 rows in set (0.002 sec)
+
+MariaDB [db_tokobuku_putrinur]> select * from penjualan;
++----------+-----------+--------+--------+
+| id_order | id_barang | harga  | jumlah |
++----------+-----------+--------+--------+
+|     6017 |     15056 | 170000 |      3 |
+|     6018 |     15058 |  32000 |      1 |
++----------+-----------+--------+--------+
+2 rows in set (0.002 sec)
+
+MariaDB [db_tokobuku_putrinur]> update buku set nama_buku='Ra Ri Re' where kode_buku=B001;
+ERROR 1054 (42S22): Unknown column 'B001' in 'where clause'
+MariaDB [db_tokobuku_putrinur]> update buku set nama_buku='Ra Ri Re' where kode_buku="B001";
+Query OK, 1 row affected (0.028 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [db_tokobuku_putrinur]> select * from buku;
++-----------+------------+------------+----------+--------------+-------------+------+
+| kode_buku | nama_buku  | nomor_isbn | penerbit | tahun_terbit | penulis     | stok |
++-----------+------------+------------+----------+--------------+-------------+------+
+| B001      | Ra Ri Re   |  979876549 | Gramedia | 2002-02-10   | R.L. Steine |  100 |
+| B002      | Basis Data |    9798753 | Gramedia | 2005-02-15   | Andi        |  100 |
++-----------+------------+------------+----------+--------------+-------------+------+
+2 rows in set (0.004 sec)
